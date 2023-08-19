@@ -18,7 +18,7 @@
 
 <body>
     <div class="header">
-        <p class="version">漢字の標本 ver0.1.0</p>
+        <p class="version">漢字の標本 ver1.0.0</p>
     </div>
     <div class="main">
         <section id="main">
@@ -48,7 +48,7 @@
             <div class="list-title">
                 <h1 class="title" id="kanjiDescriptionTitle">漢字「」について</h1>
                 <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
-                <a href="#main" class="home" onclick="window.location.reload();">戻る</a>
+                <a href="#list" class="home" onclick="window.location.reload();">戻る</a>
             </div>
             <div class="descriptionContainer">
                 <p id="kanji-description">漢字：</p>
@@ -103,6 +103,14 @@
             <ul class="question-list" id="kun-kanji-list">
             </ul>
         </section>
+        <section id="bushu" class="hidden">
+            <div class="list-title">
+                <h1 class="title" id="bushu-kanji-question">次のうち「」が部首である漢字を1つ選べ</h1>
+                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+            </div>
+            <ul class="question-list" id="bushu-kanji-list">
+            </ul>
+        </section>
         <section id="correct" class="hidden">
             <h1 class="title">正解です！</h1>
             <h1 class="title" id="correct-description">「」をゲットしました！</h1>
@@ -113,6 +121,9 @@
                 <li>
                     <a href="#list" onclick="showSection('list')">集めた漢字一覧</a>
                 </li>
+                <li>
+                    <a onclick="window.location.reload();">もう一度</a>
+                </li>
             </ul>
         </section>
         <section id="wrong" class="hidden">
@@ -120,6 +131,9 @@
             <ul class="section-menu">
                 <li>
                     <a href="#main" onclick="showSection('main')">ホーム</a>
+                </li>
+                <li>
+                    <a onclick="window.location.reload();">もう一度</a>
                 </li>
             </ul>
         </section>
