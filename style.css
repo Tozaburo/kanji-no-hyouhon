@@ -244,3 +244,20 @@ div.line {
 div.descriptionContainer {
     width: 40vmin;
 }
+
+ul.status-list {
+    width: 90vmin;
+}
+
+p.status {
+    color: black;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 3vmin;
+    margin: 0;
+    text-align: center;
+}
+
+#status .list-title {
+    margin-bottom: 10vmin;
+}
