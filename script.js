@@ -11,9 +11,14 @@ var onKanji = [];
 var kunKanji = [];
 var collectedKanjiNum = 0;
 
-flattenKanji = [];
-for (var n = 0; n < Number(level) + 1; n++) {
-    flattenKanji = flattenKanji.concat(kanji[n]);
+loadFlattenKanji();
+cookies();
+
+function loadFlattenKanji(){
+    flattenKanji = [];
+    for (var n = 0; n < Number(level) + 1; n++) {
+        flattenKanji = flattenKanji.concat(kanji[n]);
+    }
 }
 
 function cookies() {
@@ -53,10 +58,7 @@ function cookies() {
 }
 
 
-flattenKanji = [];
-for (var n = 0; n < Number(level) + 1; n++) {
-    flattenKanji = flattenKanji.concat(kanji[n]);
-}
+loadFlattenKanji();
 
 window.addEventListener("DOMContentLoaded", function () {
     if (location.href.includes("#")) {
@@ -96,10 +98,7 @@ function showSection(id) {
         }
         if (id == "correct") {
             countCollected();
-            flattenKanji = [];
-            for (var n = 0; n < Number(level) + 1; n++) {
-                flattenKanji = flattenKanji.concat(kanji[n]);
-            }
+            loadFlattenKanji();
             if (collectedKanjiNum == flattenKanji.length) {
                 level += 1;
             }
@@ -116,10 +115,7 @@ function showSection(id) {
         }
         if (id == "status") {
             countCollected();
-            flattenKanji = [];
-            for (var n = 0; n < Number(level) + 1; n++) {
-                flattenKanji = flattenKanji.concat(kanji[n]);
-            }
+            loadFlattenKanji();
             document.querySelector("#status-class").innerHTML = "現在の級：" + kankenLevel[Number(level)] + "級";
             document.querySelector("#status-next-class").innerHTML = "次級に行くために必要な漢字：" + String(collectedKanjiNum) + "/" + String(flattenKanji.length);
         }
@@ -249,6 +245,7 @@ function arrayShuffle(array) {
 }
 
 function onQuestion() {
+    loadFlattenKanji();
     var answerYomi = "";
     while (answerYomi == "") {
         var randomAnswer = Math.floor(Math.random() * flattenKanji.length);
@@ -279,6 +276,7 @@ function onQuestion() {
 }
 
 function kunQuestion() {
+    loadFlattenKanji();
     var answerYomi = "";
     while (answerYomi == "") {
         var randomAnswer = Math.floor(Math.random() * flattenKanji.length);
