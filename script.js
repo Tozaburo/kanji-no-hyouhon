@@ -11,44 +11,49 @@ var onKanji = [];
 var kunKanji = [];
 var collectedKanjiNum = 0;
 
+flattenKanji = [];
 for (var n = 0; n < Number(level) + 1; n++) {
     flattenKanji = flattenKanji.concat(kanji[n]);
 }
 
-var cookies = getCookiesAsArray();
-collected = "";
-if (!cookies[0].includes("collected")) {
-    makeCookie("collected", "10000000000000000,100000000000000000000000000000000,10000000000000000000000000000000000000000,40000000000000000000000000000000000000000,800000000000000000000000000000000000000,200000000000000000000000000000000000000,800000000000000000000000000000000000000000000000000000000000000,g00000000000000000000000000000000000000000000000000000000,800000000000000000000000000000000000000000000000000000000000000000,80000000000000000000000000000000000000,200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0");
-    collected = ["10000000000000000", "100000000000000000000000000000000", "10000000000000000000000000000000000000000", "40000000000000000000000000000000000000000", "800000000000000000000000000000000000000", "200000000000000000000000000000000000000", "800000000000000000000000000000000000000000000000000000000000000", "g00000000000000000000000000000000000000000000000000000000", "800000000000000000000000000000000000000000000000000000000000000000", "80000000000000000000000000000000000000", "200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "0"];
-} else {
-    collected = cookies[1][cookies[0].indexOf("collected")].split(",");
-}
-if (!cookies[0].includes("level")) {
-    makeCookie("level", "0");
-    level = "0";
-} else {
-    level = cookies[1][cookies[0].indexOf("level")];
-}
-
-collectedKanji = [];
-for (var n = 0; n < collected.length; n++) {
-    var tck = convertBase(collected[n], 32, 2);
-    var repeat = kanji[n].length - tck.length + 1;
-    for (var m = 0; m < repeat; m++) {
-        tck += "0";
+function cookies() {
+    var cookies = getCookiesAsArray();
+    collected = "";
+    if (!cookies[0].includes("collected")) {
+        makeCookie("collected", "10000000000000000,100000000000000000000000000000000,10000000000000000000000000000000000000000,40000000000000000000000000000000000000000,800000000000000000000000000000000000000,200000000000000000000000000000000000000,800000000000000000000000000000000000000000000000000000000000000,g00000000000000000000000000000000000000000000000000000000,800000000000000000000000000000000000000000000000000000000000000000,80000000000000000000000000000000000000,200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0");
+        collected = ["10000000000000000", "100000000000000000000000000000000", "10000000000000000000000000000000000000000", "40000000000000000000000000000000000000000", "800000000000000000000000000000000000000", "200000000000000000000000000000000000000", "800000000000000000000000000000000000000000000000000000000000000", "g00000000000000000000000000000000000000000000000000000000", "800000000000000000000000000000000000000000000000000000000000000000", "80000000000000000000000000000000000000", "200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "0"];
+    } else {
+        collected = cookies[1][cookies[0].indexOf("collected")].split(",");
     }
-    collectedKanji.push(tck);
-}
-saveCollected();
+    if (!cookies[0].includes("level")) {
+        makeCookie("level", "0");
+        level = "0";
+    } else {
+        level = cookies[1][cookies[0].indexOf("level")];
+    }
 
-levelKanji = [];
-for (var n = 0; n < Number(level) + 1; n++) {
-    levelKanji.push([]);
-    for (var m = 0; m < Number(kanji[n].length); m++) {
-        levelKanji[levelKanji.length - 1].push(kanji[n][m][0]);
+    collectedKanji = [];
+    for (var n = 0; n < collected.length; n++) {
+        var tck = convertBase(collected[n], 32, 2);
+        var repeat = kanji[n].length - tck.length + 1;
+        for (var m = 0; m < repeat; m++) {
+            tck += "0";
+        }
+        collectedKanji.push(tck);
+    }
+    saveCollected();
+
+    levelKanji = [];
+    for (var n = 0; n < Number(level) + 1; n++) {
+        levelKanji.push([]);
+        for (var m = 0; m < Number(kanji[n].length); m++) {
+            levelKanji[levelKanji.length - 1].push(kanji[n][m][0]);
+        }
     }
 }
 
+
+flattenKanji = [];
 for (var n = 0; n < Number(level) + 1; n++) {
     flattenKanji = flattenKanji.concat(kanji[n]);
 }
@@ -90,6 +95,14 @@ function showSection(id) {
             kunQuestion();
         }
         if (id == "correct") {
+            countCollected();
+            flattenKanji = [];
+            for (var n = 0; n < Number(level) + 1; n++) {
+                flattenKanji = flattenKanji.concat(kanji[n]);
+            }
+            if (collectedKanjiNum == flattenKanji.length) {
+                level += 1;
+            }
             document.querySelector("#correct-description").innerHTML = "「" + answerKanji + "」をゲットしました！"
             for (var n = 0; n < kanji.length; n++) {
                 for (var m = 0; m < kanji[n].length; m++) {
@@ -103,6 +116,10 @@ function showSection(id) {
         }
         if (id == "status") {
             countCollected();
+            flattenKanji = [];
+            for (var n = 0; n < Number(level) + 1; n++) {
+                flattenKanji = flattenKanji.concat(kanji[n]);
+            }
             document.querySelector("#status-class").innerHTML = "現在の級：" + kankenLevel[Number(level)] + "級";
             document.querySelector("#status-next-class").innerHTML = "次級に行くために必要な漢字：" + String(collectedKanjiNum) + "/" + String(flattenKanji.length);
         }
@@ -148,6 +165,7 @@ function countCollected() {
 }
 
 function loadList() {
+    cookies();
     for (var n = 0; n < levelKanji.length; n++) {
         for (var m = 0; m < levelKanji[n].length; m++) {
             if (collectedKanji[n][m + 1] != 1) {
