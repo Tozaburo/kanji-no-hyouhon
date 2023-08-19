@@ -1,5 +1,5 @@
 var currentSection = "main";
-var sectionList = ["main", "list", "collect", "yomi", "on", "kun", "status"]
+var sectionList = ["main", "list", "collect", "yomi", "on", "kun", "bushu", "status"]
 var kankenLevel = ["10", "9", "8", "7", "6", "5", "4", "3", "準2", "2", "準1", "1"];
 var collected = ["0"];
 var level = "-1";
@@ -7,14 +7,16 @@ var levelKanji = [];
 var collectedKanji = [];
 var flattenKanji = [];
 var answerKanji = "";
+var answerBushu = "";
 var onKanji = [];
 var kunKanji = [];
+var bushuKanji = [];
 var collectedKanjiNum = 0;
 
 loadFlattenKanji();
 cookies();
 
-function loadFlattenKanji(){
+function loadFlattenKanji() {
     flattenKanji = [];
     for (var n = 0; n < Number(level) + 1; n++) {
         flattenKanji = flattenKanji.concat(kanji[n]);
@@ -95,6 +97,9 @@ function showSection(id) {
         }
         if (id == "kun") {
             kunQuestion();
+        }
+        if (id == "bushu") {
+            bushuQuestion();
         }
         if (id == "correct") {
             countCollected();
@@ -306,6 +311,33 @@ function kunQuestion() {
     }
 }
 
+function bushuQuestion() {
+    loadFlattenKanji();
+    var answerBushu = "";
+    while (answerBushu == "") {
+        var randomAnswer = Math.floor(Math.random() * flattenKanji.length);
+        answerKanji = flattenKanji[randomAnswer][0]
+        answerBushu = flattenKanji[randomAnswer][1];
+    }
+    var random = 0;
+    bushuKanji = [];
+    bushuKanji.push(answerKanji);
+    for (var n = 0; n < 8;) {
+        random = Math.floor(Math.random() * flattenKanji.length);
+        if (!flattenKanji[random][1].includes(answerBushu) && !bushuKanji.includes(flattenKanji[random][0])) {
+            bushuKanji.push(flattenKanji[random][0])
+            n += 1;
+        }
+
+    }
+    bushuKanji = arrayShuffle(bushuKanji);
+    document.querySelector("#bushu-kanji-question").innerHTML = "次のうち「" + removeParenthesisContent(answerBushu) + "」が部首である漢字を1つ選べ";
+    document.querySelector("#bushu-kanji-list").innerHTML = "";
+    for (var n = 0; n < 9; n++) {
+        document.querySelector("#bushu-kanji-list").innerHTML += "<li><a onclick='bushuKanjiJudgment(" + n + ")'>" + bushuKanji[n] + "</a></li>";
+    }
+}
+
 function onKanjiJudgment(num) {
     if (answerKanji == onKanji[num]) {
         showSection("correct");
@@ -322,8 +354,20 @@ function kunKanjiJudgment(num) {
     }
 }
 
+function bushuKanjiJudgment(num) {
+    if (answerKanji == bushuKanji[num]) {
+        showSection("correct");
+    } else {
+        showSection("wrong");
+    }
+}
+
 function replaceAt(str, index, replacement) {
     return str.substr(0, index) + replacement + str.substr(index + replacement.length);
+}
+
+function removeParenthesisContent(str) {
+    return str.replace(/（.*?）/g, '');
 }
 
 function goBack() {
