@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"
+        integrity="sha256-WCzAhd2P6gRJF9Hv3oOOd+hFJi/QJbv+Azn4CGB8gfY=" crossorigin="anonymous"></script>
+    <script src="data.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title">漢字の標本</title>
+</head>
+
+<body>
+    <div class="header">
+        <p class="version">漢字の標本 ver0.1.0</p>
+    </div>
+    <div class="main">
+        <section id="main">
+            <h1 class="title">漢字の標本</h1>
+            <p class="description">漢字を「集める」ためのサービスです。</p>
+            <ul class="section-menu">
+                <li>
+                    <a href="#list" onclick="showSection('list')">集めた漢字一覧</a>
+                </li>
+                <li>
+                    <a href="#collect" onclick="showSection('collect')">漢字を集める</a>
+                </li>
+                <li>
+                    <a href="#status" onclick="showSection('status')">ステータス</a>
+                </li>
+            </ul>
+        </section>
+        <section id="list" class="hidden">
+            <div class="list-title">
+                <h1 class="title">集めた漢字一覧</h1>
+                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+            </div>
+            <ul class="list" id="kanji-list">
+            </ul>
+        </section>
+        <section id="kanjiDescription" class="hidden">
+            <div class="list-title">
+                <h1 class="title" id="kanjiDescriptionTitle">漢字「」について</h1>
+                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+            </div>
+            <div class="descriptionContainer">
+                <p id="kanji-description">漢字：</p>
+                <p id="on-description">音読み：</p>
+                <p id="kun-description">訓読み：</p>
+                <p id="bushu-description">部首：</p>
+                <p id="kakusu-description">画数：</p>
+            </div>
+        </section>
+        <section id="collect" class="hidden">
+            <h1 class="title">漢字を集める</h1>
+            <p class="description" id="class">現在の級：</p>
+            <ul class="section-menu">
+                <li>
+                    <a href="#main" onclick="showSection('main')">ホームへ戻る</a>
+                </li>
+                <li>
+                    <a href="#yomi" onclick="showSection('yomi')">読みで集める</a>
+                </li>
+                <li>
+                    <a href="#bushu" onclick="showSection('bushu')">部首で集める</a>
+                </li>
+            </ul>
+        </section>
+        <section id="yomi" class="hidden">
+            <h1 class="title">読みで集める</h1>
+            <ul class="section-menu">
+                <li>
+                    <a href="#main" onclick="showSection('main')">ホームへ戻る</a>
+                </li>
+                <li>
+                    <a href="#on" onclick="showSection('on')">音読み</a>
+                </li>
+                <li>
+                    <a href="#kun" onclick="showSection('kun')">訓読み</a>
+                </li>
+            </ul>
+        </section>
+        <section id="on" class="hidden">
+            <div class="list-title">
+                <h1 class="title" id="on-kanji-question">次のうち「」と読むものを1つ選べ</h1>
+                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+            </div>
+            <ul class="question-list" id="on-kanji-list">
+            </ul>
+        </section>
+        <section id="correct" class="hidden">
+            <h1 class="title">正解です！</h1>
+            <h1 class="title" id="on-kanji-description">「」をゲットしました！</h1>
+            <ul class="section-menu">
+                <li>
+                    <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+                </li>
+            </ul>
+        </section>
+        <section id="wrong" class="hidden">
+            <h1 class="title" id="on-kanji-question">残念...</h1>
+            <ul class="section-menu">
+                <li>
+                    <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+</body>
+
+</html>
