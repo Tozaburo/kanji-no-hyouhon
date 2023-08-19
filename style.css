@@ -1,0 +1,246 @@
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.main {
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.top {
+    width: 100vw;
+    margin: 0;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+body {
+    margin: 0;
+}
+
+h1.title {
+    color: black;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 600;
+    font-size: 4vmin;
+    margin: 0;
+}
+
+p.description {
+    color: black;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 2vmin;
+    margin: 0;
+}
+
+section {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    width: 100%;
+
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+section:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    position: static;
+}
+
+ul {
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+    list-style: none;
+}
+
+ul.section-menu {
+    margin-top: 5vmin;
+}
+
+.section-menu li {
+    list-style: none;
+    margin: 2vmin;
+}
+
+.section-menu a {
+    display: block;
+    color: black;
+    padding: 1vmin;
+    border: 0.2vmin solid;
+    border-color: black;
+    border-radius: 0.5vmin;
+    width: 30vmin;
+    text-align: center;
+    font-size: 2vmin;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all ease-in-out 0.375s;
+}
+
+.section-menu a:hover {
+    transform: scale(1.125);
+}
+
+ul.list,
+ul.question-list {
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ul.list {
+    width: 90vmin;
+}
+
+ul.question-list {
+    margin-top: 10vmin;
+    width: 40vmin;
+    height: 40vmin;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
+.list a,
+.question-list a {
+    display: block !important;
+    text-align: center;
+    color: black;
+    border: 0.2vmin solid;
+    border-color: black;
+    border-radius: 0.5vmin;
+    width: 10vmin;
+    height: 10vmin;
+    line-height: 10vmin;
+    text-align: center;
+    font-size: 5vmin;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    margin: 1vmin;
+    transition: all ease-in-out 0.375s;
+    cursor: pointer;
+}
+
+.list a:hover,
+.question-list a:hover {
+    transform: scale(1.125);
+}
+
+p.version {
+    height: 2vmin;
+    color: black;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 2vmin;
+    margin: 2vmin;
+}
+
+.header {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}
+
+a.home {
+    display: inline-block !important;
+    text-align: center;
+    color: black;
+    border: 0.2vmin solid;
+    border-color: black;
+    border-radius: 0.5vmin;
+    padding: 0.75vmin;
+    text-align: center;
+    font-size: 2vmin;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    margin: 1vmin;
+    transition: all ease-in-out 0.375s;
+    cursor: pointer;
+}
+
+a.home:hover {
+    transform: scale(1.125);
+}
+
+#list h1 {
+    display: inline-block !important;
+}
+
+div.list-title {
+    display: flex;
+}
+
+#list div.list-title {
+    height: 10vmin;
+    width: 90vmin;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-top: 20vmin;
+    margin-bottom: 10vmin;
+}
+
+#kanjiDescription div.list-title {
+    height: 10vmin;
+    width: 90vmin;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-bottom: 10vmin;
+}
+
+div.line {
+    width: 90vmin;
+    border: 0.1vmin solid black;
+    border-radius: 100vmin;
+    margin: 2vmin 0;
+}
+
+#kanjiDescription p {
+    color: black;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 2vmin;
+    margin: 0;
+    text-align: left;
+}
+
+div.descriptionContainer {
+    width: 40vmin;
+}
