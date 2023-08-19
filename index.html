@@ -2,11 +2,10 @@
 <html lang="ja">
 
 <head>
+    <script src="data.js"></script>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"
-        integrity="sha256-WCzAhd2P6gRJF9Hv3oOOd+hFJi/QJbv+Azn4CGB8gfY=" crossorigin="anonymous"></script>
-    <script src="data.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.1.0/bignumber.min.js'></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
@@ -49,6 +48,7 @@
             <div class="list-title">
                 <h1 class="title" id="kanjiDescriptionTitle">漢字「」について</h1>
                 <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+                <a href="#main" class="home" onclick="window.location.reload();">戻る</a>
             </div>
             <div class="descriptionContainer">
                 <p id="kanji-description">漢字：</p>
@@ -89,18 +89,29 @@
         </section>
         <section id="on" class="hidden">
             <div class="list-title">
-                <h1 class="title" id="on-kanji-question">次のうち「」と読むものを1つ選べ</h1>
+                <h1 class="title" id="on-kanji-question">次のうち「」と音読みで読むものを1つ選べ</h1>
                 <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
             </div>
             <ul class="question-list" id="on-kanji-list">
             </ul>
         </section>
+        <section id="kun" class="hidden">
+            <div class="list-title">
+                <h1 class="title" id="kun-kanji-question">次のうち「」と訓読みで読むものを1つ選べ</h1>
+                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+            </div>
+            <ul class="question-list" id="kun-kanji-list">
+            </ul>
+        </section>
         <section id="correct" class="hidden">
             <h1 class="title">正解です！</h1>
-            <h1 class="title" id="on-kanji-description">「」をゲットしました！</h1>
+            <h1 class="title" id="correct-description">「」をゲットしました！</h1>
             <ul class="section-menu">
                 <li>
-                    <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+                    <a href="#main" onclick="showSection('main')">ホーム</a>
+                </li>
+                <li>
+                    <a href="#list" onclick="showSection('list')">集めた漢字一覧</a>
                 </li>
             </ul>
         </section>
@@ -108,7 +119,21 @@
             <h1 class="title" id="on-kanji-question">残念...</h1>
             <ul class="section-menu">
                 <li>
-                    <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+                    <a href="#main" onclick="showSection('main')">ホーム</a>
+                </li>
+            </ul>
+        </section>
+        <section id="status" class="hidden">
+            <div class="list-title">
+                <h1 class="title">あなたのステータス</h1>
+                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+            </div>
+            <ul class="status-list">
+                <li>
+                    <p class="status" id="status-class">現在の級：</p>
+                </li>
+                <li>
+                    <p class="status" id="status-next-class">次の級に必要な漢字：/</p>
                 </li>
             </ul>
         </section>
