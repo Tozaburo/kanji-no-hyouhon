@@ -1,5 +1,5 @@
 var currentSection = "main";
-var sectionList = ["main", "list", "collect", "yomi", "on", "kun", "bushu", "status"]
+var sectionList = ["main", "list", "collect", "yomi", "on", "kun", "bushu", "status", "source"]
 var kankenLevel = ["10", "9", "8", "7", "6", "5", "4", "3", "準2", "2", "準1", "1"];
 var collected = ["0"];
 var level = "-1";
