@@ -261,3 +261,13 @@ p.status {
 #status .list-title {
     margin-bottom: 10vmin;
 }
+
+.description a {
+    color: black;
+    text-decoration: underline !important;
+}
+
+.description a:hover {
+    color: black;
+    text-decoration: none !important;
+}
