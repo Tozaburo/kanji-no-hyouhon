@@ -13,9 +13,6 @@ var kunKanji = [];
 var bushuKanji = [];
 var collectedKanjiNum = 0;
 
-loadFlattenKanji();
-cookies();
-
 function loadFlattenKanji() {
     flattenKanji = [];
     for (var n = 0; n < Number(level) + 1; n++) {
@@ -27,8 +24,8 @@ function cookies() {
     var cookies = getCookiesAsArray();
     collected = "";
     if (!cookies[0].includes("collected")) {
-        makeCookie("collected", "10000000000000000,100000000000000000000000000000000,10000000000000000000000000000000000000000,40000000000000000000000000000000000000000,800000000000000000000000000000000000000,200000000000000000000000000000000000000,800000000000000000000000000000000000000000000000000000000000000,g00000000000000000000000000000000000000000000000000000000,800000000000000000000000000000000000000000000000000000000000000000,80000000000000000000000000000000000000,200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0");
-        collected = ["10000000000000000", "100000000000000000000000000000000", "10000000000000000000000000000000000000000", "40000000000000000000000000000000000000000", "800000000000000000000000000000000000000", "200000000000000000000000000000000000000", "800000000000000000000000000000000000000000000000000000000000000", "g00000000000000000000000000000000000000000000000000000000", "800000000000000000000000000000000000000000000000000000000000000000", "80000000000000000000000000000000000000", "200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "0"];
+        makeCookie("collected", "1,1,1,1,1,1,1,1,1,1,1,1");
+        collected = ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"];
     } else {
         collected = cookies[1][cookies[0].indexOf("collected")].split(",");
     }
@@ -41,7 +38,7 @@ function cookies() {
 
     collectedKanji = [];
     for (var n = 0; n < collected.length; n++) {
-        var tck = convertBase(collected[n], 32, 2);
+        var tck = convertBase(collected[n], 36, 2);
         var repeat = kanji[n].length - tck.length + 1;
         for (var m = 0; m < repeat; m++) {
             tck += "0";
@@ -59,23 +56,9 @@ function cookies() {
     }
 }
 
-
-loadFlattenKanji();
-
-window.addEventListener("DOMContentLoaded", function () {
-    if (location.href.includes("#")) {
-        var url = location.href.split("#");
-        if (url[1] != "" && sectionList.includes(url[1])) {
-            showSection(url[1]);
-        } else {
-            location.href = url[0];
-        }
-    }
-});
-
-function convertBase(numStr, fromBase, toBase) {
-    var decimalNumber = parseInt(numStr, fromBase);
-    return decimalNumber.toString(toBase);
+function convertBase(value, fromBase, toBase) {
+    const decimalValue = new BigNumber(value, fromBase);
+    return decimalValue.toString(toBase);
 }
 
 function showSection(id) {
@@ -122,7 +105,7 @@ function showSection(id) {
             countCollected();
             loadFlattenKanji();
             document.querySelector("#status-class").innerHTML = "現在の級：" + kankenLevel[Number(level)] + "級";
-            document.querySelector("#status-next-class").innerHTML = "次級に行くために必要な漢字：" + String(collectedKanjiNum) + "/" + String(flattenKanji.length);
+            document.querySelector("#status-next-class").innerHTML = "次級に行くために必要な漢字：" + String(flattenKanji.length - collectedKanjiNum) + "/" + String(flattenKanji.length);
         }
     }, 500);
 }
@@ -149,17 +132,23 @@ function getCookiesAsArray() {
 function saveCollected() {
     collected = [];
     for (var n = 0; n < collectedKanji.length; n++) {
-        collected.push(convertBase(collectedKanji[n], 2, 32));
+        collected.push(convertBase(collectedKanji[n], 2, 36));
     }
     makeCookie("collected", collected.join(","));
+    makeCookie("level", level);
+}
+
+function toFullString(number) {
+    return number.toLocaleString('fullwide', { useGrouping: false });
 }
 
 function countCollected() {
-    collectedKanjiNum = 0;
+    loadFlattenKanji();
+    collectedKanjiNum = flattenKanji.length;
     for (var n = 0; n < levelKanji.length; n++) {
         for (var m = 0; m < levelKanji[n].length; m++) {
             if (collectedKanji[n][m + 1] != 1) {
-                collectedKanjiNum += 1;
+                collectedKanjiNum -= 1;
             }
         }
     }
@@ -199,26 +188,26 @@ function kanjiDescription(num) {
         document.querySelector("#kanjiDescription").innerHTML = `
 <h1 class="title" id="kanjiDescriptionTitle">まだこの漢字をゲットしていないようです...</h1>
 <ul class="section-menu">
-    <li>
-        <a href="#main" onclick="showSection('main')">ホーム</a>
-    </li>
-    <li>
-    <a href="#main" onclick="window.location.reload();">戻る</a>
-    </li>
+<li>
+    <a href="#main" onclick="showSection('main')">ホーム</a>
+</li>
+<li>
+<a href="#main" onclick="window.location.reload();">戻る</a>
+</li>
 </ul>`;
     } else {
         document.querySelector("#kanjiDescription").innerHTML = `
 <div class="list-title">
-    <h1 class="title" id="kanjiDescriptionTitle">漢字「」について</h1>
-    <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
-    <a href="#main" class="home" onclick="window.location.reload();">戻る</a>
+<h1 class="title" id="kanjiDescriptionTitle">漢字「」について</h1>
+<a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+<a href="#main" class="home" onclick="window.location.reload();">戻る</a>
 </div>
 <div class="descriptionContainer">
-    <p id="kanji-description">漢字：</p>
-    <p id="on-description">音読み：</p>
-    <p id="kun-description">訓読み：</p>
-    <p id="bushu-description">部首：</p>
-    <p id="kakusu-description">画数：</p>
+<p id="kanji-description">漢字：</p>
+<p id="on-description">音読み：</p>
+<p id="kun-description">訓読み：</p>
+<p id="bushu-description">部首：</p>
+<p id="kakusu-description">画数：</p>
 </div>`
         document.querySelector("#kanjiDescriptionTitle").innerHTML = "漢字「" + flattenKanji[num][0] + "」について";
         document.querySelector("#kanji-description").innerHTML = "漢字：" + flattenKanji[num][0];
@@ -374,3 +363,31 @@ function goBack() {
     history.back(-1)
     window.location.reload();
 }
+
+window.addEventListener("DOMContentLoaded", function () {
+    cookies();
+
+    loadFlattenKanji();
+
+
+    loadFlattenKanji();
+
+
+    if (location.href.includes("#")) {
+        var url = location.href.split("#");
+        if (url[1] != "" && sectionList.includes(url[1])) {
+            showSection(url[1]);
+        } else {
+            location.href = url[0];
+        }
+    }
+
+    // function convertBase(numStr, fromBase, toBase) {
+    //     var decimalNumber = new BigNumber(numStr, fromBase); 
+    //     // var decimalNumber = toFullString(parseInt(numStr, fromBase));
+    //     // return decimalNumber.toString(toBase);
+    //     var output = new BigNumber(decimalNumber, toBase); 
+    //     console.log(output)
+    //     return Object.values(output)[2][0];
+    // }
+});
