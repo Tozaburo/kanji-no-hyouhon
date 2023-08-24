@@ -12,6 +12,7 @@ var onKanji = [];
 var kunKanji = [];
 var bushuKanji = [];
 var collectedKanjiNum = 0;
+var question = "";
 
 function loadFlattenKanji() {
     flattenKanji = [];
@@ -200,7 +201,7 @@ function kanjiDescription(num) {
 <div class="list-title">
 <h1 class="title" id="kanjiDescriptionTitle">漢字「」について</h1>
 <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
-<a href="#main" class="home" onclick="window.location.reload();">戻る</a>
+<a href="#main" class="home" onclick="showSection('list')">戻る</a>
 </div>
 <div class="descriptionContainer">
 <p id="kanji-description">漢字：</p>
@@ -239,6 +240,7 @@ function arrayShuffle(array) {
 }
 
 function onQuestion() {
+    question = "on";
     loadFlattenKanji();
     var answerYomi = "";
     while (answerYomi == "") {
@@ -270,6 +272,7 @@ function onQuestion() {
 }
 
 function kunQuestion() {
+    question = "kun";
     loadFlattenKanji();
     var answerYomi = "";
     while (answerYomi == "") {
@@ -301,6 +304,7 @@ function kunQuestion() {
 }
 
 function bushuQuestion() {
+    question = "bushu";
     loadFlattenKanji();
     var answerBushu = "";
     while (answerBushu == "") {
@@ -359,9 +363,8 @@ function removeParenthesisContent(str) {
     return str.replace(/（.*?）/g, '');
 }
 
-function goBack() {
-    history.back(-1)
-    window.location.reload();
+function back() {
+    showSection(question);
 }
 
 window.addEventListener("DOMContentLoaded", function () {
