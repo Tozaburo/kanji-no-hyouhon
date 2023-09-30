@@ -3,13 +3,15 @@
 
 <head>
     <script src="data.js"></script>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.1.0/bignumber.min.js'></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,200" />
     <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +19,29 @@
 </head>
 
 <body>
+    <div class="particle" data-num="0"></div>
     <div class="header">
-        <p class="version">漢字の標本 ver1.0.2</p>
+        <p class="version">漢字の標本 ver1.1.0</p>
+    </div>
+    <div class="menuButton">
+        <span class="material-symbols-outlined" onclick="backPage()">
+            arrow_back
+        </span>
+        <span class="material-symbols-outlined" onclick="showSection('main'); location.href='#main'">
+            home
+        </span>
+    </div>
+    <div class="popup">
+        <div class="popup-wrap">
+            <h1>おめでとうございます！</h1>
+            <p id="popup-p"></p>
+            <a onclick="document.querySelector('.popup').style.display = 'none';">閉じる</a>
+        </div>
     </div>
     <div class="main">
         <section id="main">
-            <h1 class="title">漢字の標本</h1>
-            <p class="description">漢字を「集める」ためのサービスです。</p>
+            <h1 class="title">漢字の<span>標</span><span>本</span></h1>
+            <p class="description">漢字を「集める」。そして学ぶ。</p>
             <ul class="section-menu">
                 <li>
                     <a href="#list" onclick="showSection('list')">集めた漢字一覧</a>
@@ -37,12 +55,14 @@
                 <li>
                     <a href="#source" onclick="showSection('source')">出典</a>
                 </li>
+                <li>
+                    <a href="#setting" onclick="showSection('setting')">設定</a>
+                </li>
             </ul>
         </section>
         <section id="list" class="hidden">
             <div class="list-title">
                 <h1 class="title">集めた漢字一覧</h1>
-                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
             </div>
             <ul class="list" id="kanji-list">
             </ul>
@@ -50,7 +70,6 @@
         <section id="kanjiDescription" class="hidden">
             <div class="list-title">
                 <h1 class="title" id="kanjiDescriptionTitle">漢字「」について</h1>
-                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
                 <a href="#list" class="home" onclick="window.location.reload();">戻る</a>
             </div>
             <div class="descriptionContainer">
@@ -93,7 +112,6 @@
         <section id="on" class="hidden">
             <div class="list-title">
                 <h1 class="title" id="on-kanji-question">次のうち「」と音読みで読むものを1つ選べ</h1>
-                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
             </div>
             <ul class="question-list" id="on-kanji-list">
             </ul>
@@ -101,7 +119,6 @@
         <section id="kun" class="hidden">
             <div class="list-title">
                 <h1 class="title" id="kun-kanji-question">次のうち「」と訓読みで読むものを1つ選べ</h1>
-                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
             </div>
             <ul class="question-list" id="kun-kanji-list">
             </ul>
@@ -109,7 +126,6 @@
         <section id="bushu" class="hidden">
             <div class="list-title">
                 <h1 class="title" id="bushu-kanji-question">次のうち「」が部首である漢字を1つ選べ</h1>
-                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
             </div>
             <ul class="question-list" id="bushu-kanji-list">
             </ul>
@@ -143,24 +159,36 @@
         <section id="status" class="hidden">
             <div class="list-title">
                 <h1 class="title">あなたのステータス</h1>
-                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
             </div>
             <ul class="status-list">
                 <li>
-                    <p class="status" id="status-class">現在の級：</p>
+                    <p class="status" id="status-class"></p>
                 </li>
                 <li>
-                    <p class="status" id="status-next-class">次の級に必要な漢字：/</p>
+                    <div class="graph">
+                        <p id="status-next-class"></p>
+                    </div>
                 </li>
             </ul>
         </section>
         <section id="source" class="hidden">
             <div class="list-title">
-                <h1 class="title">出典
-                </h1>
-                <a href="#main" class="home" onclick="showSection('main')">ホーム</a>
+                <h1 class="title">出典</h1>
             </div>
             <p class="description">「漢字の標本」の漢字の読み・部首等のデータは<a href="https://kanji.jitenon.jp/">漢字辞典オンライン</a>に準拠しています。</p>
+        </section>
+        <section id="setting" class="hidden">
+            <div class="list-title">
+                <h1 class="title">設定</h1>
+            </div>
+            <ul>
+                <li>
+                    <h2>背景の漢字表示の<br>オンオフ</h2>
+                    <div class="toggle">
+                        <input type="checkbox" name="check" id="onf">
+                    </div>
+                </li>
+            </ul>
         </section>
     </div>
 </body>
