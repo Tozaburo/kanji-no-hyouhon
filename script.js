@@ -7,6 +7,7 @@ var onf = 0;
 var levelKanji = [];
 var collectedKanji = [];
 var collectedKanjiList = [];
+var flattenCollectedKanjiList = [];
 var flattenKanji = [];
 var answerKanji = "";
 var answerBushu = "";
@@ -29,14 +30,15 @@ function getRandomIntInclusive(min, max) {
 
 let animationId;
 function textDraw() {
+    loadKanji();
 
     if (Math.round(getRandomIntInclusive(1, 10)) == 1) {
         var num = Number(document.querySelector(".particle").dataset.num);
         var width = window.innerWidth;
         document.querySelector(".particle").dataset.num = String(num + 1);
-        document.querySelector(".particle").innerHTML += `<p id="text${document.querySelector(".particle").dataset.num}" style="top: 0vh; left: ${getRandomIntInclusive(0, width)}px; font-size: ${getRandomArbitrary(1, 10)}vh;">${collectedKanjiList[Math.floor(Math.random() * collectedKanjiList.length)]}</p>`;
+        document.querySelector(".particle").innerHTML += `<p id="text${document.querySelector(".particle").dataset.num}" style="top: 0vh; left: ${getRandomIntInclusive(0, width)}px; font-size: ${getRandomArbitrary(1, 10)}vh;">${flattenCollectedKanjiList[Math.floor(Math.random() * flattenCollectedKanjiList.length)]}</p>`;
     }
-    loadList();
+
     var num = Number(document.querySelector(".particle").dataset.num);
 
     for (var n = 1; n < num + 1; n++) {
@@ -178,7 +180,7 @@ function countCollected() {
     }
 }
 
-function loadList() {
+function loadKanji() {
     collectedKanjiList = [];
     kanjiData();
     for (var n = 0; n < levelKanji.length; n++) {
@@ -189,6 +191,19 @@ function loadList() {
         }
     }
 
+    flattenCollectedKanjiList = [];
+    for (var n = 0; n < levelKanji.length; n++) {
+        flattenCollectedKanjiList = flattenCollectedKanjiList.concat(levelKanji[n]);
+    }
+
+    flattenCollectedKanjiList = flattenCollectedKanjiList.filter(function (kanji) {
+        return kanji !== "？";
+    });
+
+}
+
+function loadList() {
+    loadKanji();
     document.querySelector("#kanji-list").innerHTML = "";
     var count = 0;
     for (var n = 0; n < levelKanji.length; n++) {
@@ -211,7 +226,6 @@ function kanjiDescription(num) {
         flattenLevelKanji = flattenLevelKanji.concat(levelKanji[n]);
     }
     showSection("kanjiDescription");
-    console.log(flattenLevelKanji[num])
     if (flattenLevelKanji[num] == "？") {
         document.querySelector("#kanjiDescription").innerHTML = `
 <h1 class="title" id="kanjiDescriptionTitle">まだこの漢字をゲットしていないようです...</h1>
