@@ -213,8 +213,10 @@ function loadList() {
 
     for (var n = 0; n < levelKanji.length; n++) {
         if (n != 0) {
+            var lineDiv = document.createElement('div');
+            lineDiv.classList.add('line');
             var lineItem = document.createElement('li');
-            lineItem.appendChild(document.createElement('div').classList.add('line'));
+            lineItem.appendChild(lineDiv);
             fragment.appendChild(lineItem);
         }
         for (var m = 0; m < levelKanji[n].length; m++) {
