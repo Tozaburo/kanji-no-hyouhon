@@ -150,7 +150,7 @@ function showSection(id) {
             loadFlattenKanji();
             document.querySelector("#status-class").innerHTML = kankenLevel[Number(level)] + "級";
             document.querySelector("#status-next-class").innerHTML = String(flattenKanji.length - collectedKanjiNum) + "/" + String(flattenKanji.length);
-            document.querySelector(".graph").style.background = `linear-gradient(to right, #af263e ${String(collectedKanjiNum)}%, #b0b0b0 ${String(collectedKanjiNum)}%)`
+            document.querySelector(".graph").style.background = `linear-gradient(to right, #af263e ${String((collectedKanjiNum / flattenKanji.length) * 100)}%, #b0b0b0 ${String((collectedKanjiNum / flattenKanji.length) * 100)}%)`
         }
     }, 500);
 }
@@ -203,22 +203,38 @@ function loadKanji() {
 }
 
 function loadList() {
+    // 外部関数への依存を明示
     loadKanji();
-    document.querySelector("#kanji-list").innerHTML = "";
+
+    var kanjiListElement = document.querySelector("#kanji-list");
+    kanjiListElement.innerHTML = ''; // リストを初期化
+    var fragment = document.createDocumentFragment(); // ドキュメントフラグメントを作成
     var count = 0;
+
     for (var n = 0; n < levelKanji.length; n++) {
         if (n != 0) {
-            document.querySelector("#kanji-list").innerHTML += "<li><div class='line'></div></li>";
+            var lineItem = document.createElement('li');
+            lineItem.appendChild(document.createElement('div').classList.add('line'));
+            fragment.appendChild(lineItem);
         }
         for (var m = 0; m < levelKanji[n].length; m++) {
-            document.querySelector("#kanji-list").innerHTML += "<li><a onclick='kanjiDescription(" + count + ")'>" + levelKanji[n][m] + "</a></li>";
+            var listItem = document.createElement('li');
+            var link = document.createElement('a');
+            link.setAttribute('onclick', 'kanjiDescription(' + count + ')');
+            link.textContent = levelKanji[n][m];
+            listItem.appendChild(link);
+            fragment.appendChild(listItem);
+
             count += 1;
             if (levelKanji[n][m] != "？") {
                 collectedKanjiList.push(levelKanji[n][m]);
             }
         }
     }
+
+    kanjiListElement.appendChild(fragment); // フラグメントを一度にDOMに挿入
 }
+
 
 function kanjiDescription(num) {
     var flattenLevelKanji = [];
